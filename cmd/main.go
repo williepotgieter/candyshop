@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"log"
 	"net/http"
+	"os"
 
 	"github.com/williepotgieter/candyshop/pkg/adding"
 	"github.com/williepotgieter/candyshop/pkg/http/rest"
@@ -12,6 +13,7 @@ import (
 )
 
 func main() {
+	port := fmt.Sprintf(":%s", os.Getenv("PORT"))
 
 	r, err := storage.SetupStorage()
 	if err != nil {
@@ -24,7 +26,7 @@ func main() {
 	// Adding
 	as := adding.NewService(r)
 
-	fmt.Println("starting server on port 5000")
+	fmt.Println("starting server on port ", os.Getenv("PORT"))
 	router := rest.InitHandlers(rs, as)
-	log.Fatal(http.ListenAndServe(":5000", router))
+	log.Fatal(http.ListenAndServe(port, router))
 }
