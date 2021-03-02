@@ -12,7 +12,7 @@ func (s *Storage) AddCandy(c adding.Candy) (uuid.UUID, error) {
 	sqlStatement := `
 	INSERT INTO candies (category, name, price)
 	VALUES ($1, $2, $3)
-	RETURNING candy_id`
+	RETURNING id`
 	err := s.db.QueryRow(sqlStatement, c.Category, c.Name, c.Price).Scan(&id)
 	if err != nil {
 		log.Println("error while trying to save to DB: ", err)
