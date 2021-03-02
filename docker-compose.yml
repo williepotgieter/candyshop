@@ -1,0 +1,52 @@
+version: "3"
+
+networks:
+  backend:
+    driver: bridge
+
+services:
+
+  app:
+    container_name: candyshop
+    image: golang:1.16.0
+    env_file: db.env
+    ports: 
+      - "5000:5000"
+    networks:
+      - backend
+    volumes:
+      - .:/go/src/candyshop
+      - go-modules:/go/pkg/mod
+    working_dir: /go/src/candyshop
+    command: go run cmd/main.go
+    depends_on: 
+      - database
+    restart: always
+
+  database:
+    container_name: postgres
+    image: postgres
+    env_file: db.env
+    volumes:
+      - ./init.sql:/docker-entrypoint-initdb.d/init.sql
+      - pgdata:/var/lib/postgresql/data
+    networks:
+      backend:
+        aliases:
+          - app_db
+    restart: always
+
+  admin:
+    container_name: adminer
+    image: adminer
+    networks:
+      - backend
+    ports:
+      - "1000:8080"
+    depends_on: 
+      - database
+    restart: always
+
+volumes: 
+  pgdata:
+  go-modules:
