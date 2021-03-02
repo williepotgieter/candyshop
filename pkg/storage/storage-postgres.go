@@ -4,6 +4,7 @@ import (
 	"database/sql"
 	"fmt"
 	"os"
+	"time"
 
 	"github.com/google/uuid"
 	_ "github.com/lib/pq"
@@ -14,7 +15,9 @@ type Storage struct {
 }
 
 type Candy struct {
-	Id       uuid.UUID `json:"id"`
+	ID       uuid.UUID `json:"id"`
+	Created  time.Time `json:"created_at"`
+	Modified time.Time `json:"modified_at"`
 	Category string    `json:"category"`
 	Name     string    `json:"name"`
 	Price    float32   `json:"price"`
@@ -43,7 +46,7 @@ func (s *Storage) GetAllCandyNames() ([]Candy, error) {
 	defer rows.Close()
 
 	for rows.Next() {
-		err := rows.Scan(&candy.Id, &candy.Category, &candy.Name, &candy.Price)
+		err := rows.Scan(&candy.ID, &candy.Created, &candy.Modified, &candy.Category, &candy.Name, &candy.Price)
 		if err != nil {
 			return []Candy{}, err
 		}
