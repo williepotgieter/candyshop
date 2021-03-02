@@ -7,12 +7,6 @@ import (
 	"github.com/williepotgieter/candyshop/pkg/reading"
 )
 
-func welcomeHandler() func(w http.ResponseWriter, r *http.Request) {
-	return func(w http.ResponseWriter, r *http.Request) {
-		json.NewEncoder(w).Encode("Welcome to our candy shop!")
-	}
-}
-
 func getAllCandiesHandler(rs reading.Service) func(w http.ResponseWriter, r *http.Request) {
 	return func(w http.ResponseWriter, r *http.Request) {
 		cs, err := rs.GetAllCandyNames()
