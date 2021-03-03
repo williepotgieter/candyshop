@@ -10,6 +10,7 @@ import (
 	"github.com/williepotgieter/candyshop/pkg/http/rest"
 	"github.com/williepotgieter/candyshop/pkg/reading"
 	"github.com/williepotgieter/candyshop/pkg/storage"
+	"github.com/williepotgieter/candyshop/pkg/updating"
 )
 
 func main() {
@@ -20,13 +21,16 @@ func main() {
 		log.Fatalln("error while setting up storage", err)
 	}
 
-	// Reading
-	rs := reading.NewService(r)
-
 	// Adding
 	as := adding.NewService(r)
 
+	// Reading
+	rs := reading.NewService(r)
+
+	// Updating
+	us := updating.NewService(r)
+
 	fmt.Println("starting server on port ", os.Getenv("PORT"))
-	router := rest.InitHandlers(rs, as)
+	router := rest.InitHandlers(as, rs, us)
 	log.Fatal(http.ListenAndServe(port, router))
 }
