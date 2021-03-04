@@ -11,9 +11,15 @@ import (
 
 func updateCandyName(us updating.Service) func(w http.ResponseWriter, r *http.Request) {
 	return func(w http.ResponseWriter, r *http.Request) {
-		var ucc updating.CandyCategory
-		var ucn updating.CandyName
-		var ucp updating.CandyPrice
+		var ucc struct {
+			Category string `json:"category"`
+		}
+		var ucn struct {
+			Name string `json:"name"`
+		}
+		var ucp struct {
+			Price float32 `json:"price"`
+		}
 		params := mux.Vars(r)
 		column := params["column"]
 
@@ -28,7 +34,7 @@ func updateCandyName(us updating.Service) func(w http.ResponseWriter, r *http.Re
 				http.Error(w, "Bad request", http.StatusBadRequest)
 				return
 			}
-			if err := us.UpdateCandyCategory(id, ucc); err != nil {
+			if err := us.UpdateCandyCategory(id, ucc.Category); err != nil {
 				http.Error(w, "Internal Server Error", http.StatusInternalServerError)
 				return
 			}
@@ -37,7 +43,7 @@ func updateCandyName(us updating.Service) func(w http.ResponseWriter, r *http.Re
 				http.Error(w, "Bad request", http.StatusBadRequest)
 				return
 			}
-			if err := us.UpdateCandyName(id, ucn); err != nil {
+			if err := us.UpdateCandyName(id, ucn.Name); err != nil {
 				http.Error(w, "Internal Server Error", http.StatusInternalServerError)
 				return
 			}
@@ -46,7 +52,7 @@ func updateCandyName(us updating.Service) func(w http.ResponseWriter, r *http.Re
 				http.Error(w, "Bad request", http.StatusBadRequest)
 				return
 			}
-			if err := us.UpdateCandyPrice(id, ucp); err != nil {
+			if err := us.UpdateCandyPrice(id, ucp.Price); err != nil {
 				http.Error(w, "Internal Server Error", http.StatusInternalServerError)
 				return
 			}

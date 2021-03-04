@@ -7,6 +7,7 @@ import (
 	"os"
 
 	"github.com/williepotgieter/candyshop/pkg/adding"
+	"github.com/williepotgieter/candyshop/pkg/deleting"
 	"github.com/williepotgieter/candyshop/pkg/http/rest"
 	"github.com/williepotgieter/candyshop/pkg/reading"
 	"github.com/williepotgieter/candyshop/pkg/storage"
@@ -30,7 +31,10 @@ func main() {
 	// Updating
 	us := updating.NewService(r)
 
+	// Deleting
+	ds := deleting.NewService(r)
+
 	fmt.Println("starting server on port ", os.Getenv("PORT"))
-	router := rest.InitHandlers(as, rs, us)
+	router := rest.InitHandlers(as, rs, us, ds)
 	log.Fatal(http.ListenAndServe(port, router))
 }

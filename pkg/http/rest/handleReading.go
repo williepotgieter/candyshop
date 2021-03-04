@@ -7,7 +7,7 @@ import (
 	"github.com/williepotgieter/candyshop/pkg/reading"
 )
 
-func getAllCandiesHandler(rs reading.Service) func(w http.ResponseWriter, r *http.Request) {
+func getAllCandies(rs reading.Service) func(w http.ResponseWriter, r *http.Request) {
 	return func(w http.ResponseWriter, r *http.Request) {
 		cs, err := rs.GetAllCandyNames()
 		if err != nil {
