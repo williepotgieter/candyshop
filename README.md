@@ -57,9 +57,9 @@ _Request body_:
 
 ```json
 { 
-    "category": STRING,
-    "name": STRING, 
-    "price": FLOAT32
+    "category": "SOME CATEGORY NAME",
+    "name": "SOME CANDY NAME", 
+    "price": "SOME PRICE (NUMERIC)"
 }
 ```
 ## Reading
@@ -74,7 +74,7 @@ _Method_: ```PATCH```
 _Request body_:
 ```json
 { 
-    "category": STRING
+    "category": "SOME CATEGORY NAME"
 }
 ```
 _The_ ```{id}``` _param refers to the auto generated uuid(v4) id for a specific candy stored in the database._
@@ -84,7 +84,7 @@ _Method_: ```PATCH```
 _Request body_:
 ```json
 { 
-    "name": STRING
+    "name": "SOME CANDY NAME"
 }
 ```
 _The_ ```{id}``` _param refers to the auto generated uuid(v4) id for a specific candy stored in the database._
@@ -94,7 +94,7 @@ _Method_: ```PATCH```
 _Request body_:
 ```json
 { 
-    "price": FLOAT32
+    "price": "SOME PRICE (NUMERIC)"
 }
 ```
 _The_ ```{id}``` _param refers to the auto generated uuid(v4) id for a specific candy stored in the database._
